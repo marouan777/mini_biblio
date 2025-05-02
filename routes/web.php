@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/borrow/{book}', [BorrowingController::class, 'borrow'])->name('borrow');
     Route::post('/return/{book}', [BorrowingController::class, 'return'])->name('return');
 
-    Route::get('/documents/{type?}', [BookController::class, 'index_status'])->name('books.index');
+    Route::get('/documents/{type?}', [BookController::class, 'index_status'])->name('books.index_status');
     Route::get('/documents/create', [BookController::class, 'create'])->name('documents.create');
     Route::get('/documents', [BookController::class, 'index'])->name('books.index');
 
