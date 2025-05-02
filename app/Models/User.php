@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\status;
 
 
 class User extends Authenticatable
@@ -23,6 +24,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cin',
+        'adresse',
+        'telephone',
+        'departement',
+        'filiere',
     ];
 
     /**
@@ -50,5 +56,9 @@ class User extends Authenticatable
     public function borrowings()
     {
         return $this->hasMany(Borrowing::class);
+    }
+    public function status()
+    {
+        return $this->morphOne(Status::class, 'statusable');
     }
 }

@@ -25,7 +25,7 @@
 
 <body class="h-screen flex">
     <!-- Left side with image -->
-    <div class="w-1/2 relative bg-cover bg-center" style="background-image: url('/images/biblio_login.jpg')">
+    <div class="hidden md:block w-1/2 relative bg-cover bg-center" style="background-image: url('/images/biblio_login.jpg')">
         <div class="absolute inset-0 bg-gradient-to-t from-orange-500 to-transparent opacity-80"></div>
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-center">
             <p class="text-xl mb-5 text-shadow ">Si vous n'avez pas un compte</p>
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Login form -->
-    <div class="w-1/2 flex items-center justify-center bg-gray-900 text-white">
+    <div class="w-full md:w-1/2 w-1/2 flex items-center justify-center bg-gray-900 text-white">
         <div class="w-full max-w-md px-6">
             <h2 class="text-3xl font-semibold text-orange-400 mb-8 text-center">
                 🔒 Se connecter

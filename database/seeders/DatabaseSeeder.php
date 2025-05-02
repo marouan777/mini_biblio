@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BookSeeder::class,
         ]);
+        $this->call(StatusSeeder::class);
+
     }
 }

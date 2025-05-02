@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Status;
 
 class Book extends Model
 {
@@ -20,4 +21,9 @@ class Book extends Model
     {
         return $this->hasMany(Borrowing::class);
     }
+    public function status()
+    {
+        return $this->morphOne(Status::class, 'statusable');
+    }
 }
+
