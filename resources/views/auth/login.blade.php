@@ -83,15 +83,22 @@
                     @enderror
                 </div>
 
+                <div class="mb-6 flex items-center justify-between">
+                    <!-- Remember me -->
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="remember" class="rounded border-gray-300 text-orange-400 focus:ring-orange-500">
+                            <span class="ml-2 text-sm text-gray-300">Se souvenir de moi</span>
+                        </label>
+                    </div>
 
-                <!-- Remember me -->
-                <div class="mb-6">
-                    <label class="inline-flex items-center">
-                        <input type="checkbox" name="remember" class="rounded border-gray-300 text-orange-400 focus:ring-orange-500">
-                        <span class="ml-2 text-sm text-gray-300">Se souvenir de moi</span>
-                    </label>
+                    <!-- Forgot password -->
+                    <div>
+                        <a href="{{ route('password.request') }}" class="text-sm text-orange-400 hover:underline">
+                            Mot de passe oublié ?
+                        </a>
+                    </div>
                 </div>
-
                 <!-- Submit -->
                 <div>
                     <button type="submit" class="w-full border border-orange-500  hover:text-white hover:bg-orange-500 text-orange-500 py-2 px-4 rounded-2xl transition">Connecter</button>
