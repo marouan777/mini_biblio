@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>@yield('title')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
@@ -18,7 +18,7 @@
                 admin1
             </div>
             <nav class="mt-16 space-y-1 px-4">
-                <a href="#" class="flex items-center p-2 rounded bg-gray-800 hover:bg-orange-400 hover:text-white">
+                <a href="{{ route('books.index') }}" class="flex items-center p-2 rounded bg-gray-800 hover:bg-orange-400 hover:text-white">
                     <i class="fas fa-book mr-3"></i> Documents
                 </a>
                 <a href="#" class="flex items-center p-2 rounded hover:bg-orange-400 hover:text-white">
@@ -28,10 +28,10 @@
                     <i class="fas fa-edit mr-3"></i> Modifier Document
                 </a>
                 <hr>
-                <a href="#" class="flex items-center p-2 rounded hover:bg-orange-400 hover:text-white mt-6">
+                <a href="{{ route('adherents.index_status') }}" class="flex items-center p-2 rounded hover:bg-orange-400 hover:text-white mt-6">
                     <i class="fas fa-users mr-3"></i> Adhérents
                 </a>
-                <a href="#" class="flex items-center p-2 rounded hover:bg-orange-400 hover:text-white">
+                <a href="{{ route('adherents.index') }}" class="flex items-center p-2 rounded hover:bg-orange-400 hover:text-white">
                     <i class="fas fa-user-plus mr-3"></i> Ajouter adhérent
                 </a>
                 <a href="#" class="flex items-center p-2 rounded hover:bg-orange-400 hover:text-white">
@@ -60,17 +60,14 @@
         <!-- TOPBAR -->
         <header class="bg-gray-900 text-white px-9 py-6 flex justify-center">
             <div class="flex items-center space-x-2">
-                <i class="fas fa-book-open text-orange-400 text-2xl"></i>
-                <h1 class="text-xl font-semibold">Documents</h1>
+                @yield('icon')
+                <h1 class="text-xl font-semibold">@yield('title')</h1>
             </div>
         </header>
 
         <!-- BARRE DE NAVIGATION SECONDAIRE -->
-        <div class="bg-orange-500 text-white px-6 py-3 flex justify-center text-center space-x-6">
-            <a href="#" class="hover:border-b-4 border-white pb-1 w-1/3">Livre</a>
-            <a href="#" class="hover:border-b-4 border-white pb-1 w-1/3">Magazine</a>
-            <a href="#" class="hover:border-b-4 border-white pb-1 w-1/3">Dictionnaire</a>
-        </div>
+        @yield('topbar_tabs')
+       
 
         <!-- CONTENU -->
         <main class="flex-1 overflow-y-auto px-6 py-4 bg-white">

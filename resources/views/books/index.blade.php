@@ -1,48 +1,67 @@
 @extends('layouts.app')
 
-@section('content')
-<form method="GET" action="{{ route('books.index') }}" class="mb-4">
-    <input type="text" name="search" placeholder="Titre, auteur, catégorie" value="{{ request('search') }}">
-    <select name="status">
-        <option value="">-- Tous les statuts --</option>
-        <option value="disponible" {{ request('status') == 'disponible' ? 'selected' : '' }}>Disponible</option>
-        <option value="emprunté" {{ request('status') == 'emprunté' ? 'selected' : '' }}>Emprunté</option>
-    </select>
-    <button type="submit">Rechercher</button>
-</form>
-    <div class="container">
-        <h1>Liste des livres</h1>
-        <a href="{{ route('books.create') }}" class="btn btn-primary">Ajouter un livre</a>
+@section('title', 'Documents')
 
-        <table class="table mt-3">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Auteur</th>
-                    <th>Catégorie</th>
-                    <th>Année de publication</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($books as $book)
-                    <tr>
-                        <td>{{ $book->title }}</td>
-                        <td>{{ $book->author }}</td>
-                        <td>{{ $book->category }}</td>
-                        <td>{{ $book->published_year }}</td>
-                        <td>{{ $book->status }}</td>
-                        <td>
-                            @if ($book->status === 'disponible')
-                                <a href="{{ route('books.borrow', $book->id) }}" class="btn btn-success">Emprunter</a>
-                            @else
-                                <button class="btn btn-secondary" disabled>Emprunté</button>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+@section('icon')
+    <i class="fas fa-book-open text-orange-400 text-2xl"></i>
+@endsection
+
+@section('topbar_tabs')
+<div class="bg-orange-500 text-white px-6 py-3 flex justify-center space-x-6 text-center">
+    <a href="{{ route('books.index', ['type' => 'livre']) }}"
+       class="{{ $type === 'livre' ? 'border-b-4 border-white pb-1' : 'hover:underline' }} w-1/3">
+        Livre
+    </a>
+    <a href="{{ route('books.index', ['type' => 'magazine']) }}"
+       class="{{ $type === 'magazine' ? 'border-b-4 border-white pb-1' : 'hover:underline' }} w-1/3">
+        Magazine
+    </a>
+    <a href="{{ route('books.index', ['type' => 'dictionnaire']) }}"
+       class="{{ $type === 'dictionnaire' ? 'border-b-4 border-white pb-1' : 'hover:underline' }} w-1/3">
+        Dictionnaire
+    </a>
+</div>
+@endsection
+
+@section('content')
+<div class="container mx-auto">
+
+    @if (session('success'))
+        <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <table class="w-full mt-3 border text-sm">
+        <thead class="bg-gray-100 text-left">
+            <tr>
+                <th class="p-2">Titre</th>
+                <th class="p-2">Auteur</th>
+                <th class="p-2">Catégorie</th>
+                <th class="p-2">Année</th>
+                <th class="p-2">Type</th>
+                <th class="p-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($books as $book)
+            <tr class="border-t hover:bg-gray-50">
+                <td class="p-2">{{ $book->title }}</td>
+                <td class="p-2">{{ $book->author }}</td>
+                <td class="p-2">{{ $book->category }}</td>
+                <td class="p-2">{{ $book->published_year }}</td>
+                <td class="p-2">{{ $book->status->name ?? '—' }}</td>
+                <td class="p-2">
+                    <a href="#" class="text-blue-600 hover:underline">Modifier</a>
+                    <a href="#" class="text-red-600 hover:underline ml-2">Supprimer</a>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="6" class="text-center text-gray-500 p-4">Aucun document trouvé.</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection

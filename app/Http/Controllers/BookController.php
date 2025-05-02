@@ -11,34 +11,30 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $query = Book::query();
-
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%$search%")
-                    ->orWhere('author', 'like', "%$search%")
-                    ->orWhere('category', 'like', "%$search%");
-            });
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
-        }
-
-        $books = $query->orderBy('created_at', 'desc')->get();
+        $books = Book::all();
         return view('books.index', compact('books'));
     }
 
+    public function index_status($type = null)
+    {
+        $books = Book::whereHas('status', function ($q) use ($type) {
+            if ($type) {
+                $q->where('name', $type);
+            }
+        })->get();
+
+        return view('books.index', compact('books', 'type'));
+    }
 
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
-        //
+        return view('documents.create');
     }
 
     /**
@@ -84,5 +80,31 @@ class BookController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+
+
+
+    public function store_u(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'author' => 'required|string',
+            'published_year' => 'required|integer',
+            'category' => 'required|string',
+            'type' => 'required|in:livre,magazine,dictionnaire',
+        ]);
+
+        $book = Book::create([
+            'title' => $request->title,
+            'author' => $request->author,
+            'published_year' => $request->published_year,
+            'category' => $request->category,
+        ]);
+
+        $book->status()->create(['name' => $request->type]);
+
+        return redirect()->route('documents.index')->with('success', 'Document ajouté avec succès.');
     }
 }

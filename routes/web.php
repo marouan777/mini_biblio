@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
 use Spatie\Permission\Middleware\RoleMiddleware;
+use App\Http\Controllers\AdherentController;
 
 
 
@@ -23,8 +24,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('books', BookController::class);
     Route::post('/borrow/{book}', [BorrowingController::class, 'borrow'])->name('borrow');
     Route::post('/return/{book}', [BorrowingController::class, 'return'])->name('return');
+
+    Route::get('/documents/{type?}', [BookController::class, 'index_status'])->name('books.index');
+    Route::get('/documents/create', [BookController::class, 'create'])->name('documents.create');
+    Route::get('/documents', [BookController::class, 'index'])->name('books.index');
+
+    Route::get('/adherents/{statut?}', [AdherentController::class, 'index_status'])->name('adherents.index_status');
+    Route::get('/adherents', [AdherentController::class, 'index'])->name('adherents.index');
 });
-route::group([RoleMiddleware::class. ':admin'], function () {
+    route::group([RoleMiddleware::class. ':admin'], function () {
     route::get('/admin/stats', [BorrowingController::class, 'stats'])->name('admin.stats');
 });
 require __DIR__.'/auth.php';
